@@ -1,0 +1,263 @@
+/* ── SaludPlus Admin · style.css ── */
+
+:root {
+  --navy:        #050d1a;
+  --navy-800:    #0a1628;
+  --navy-700:    #0f2040;
+  --navy-600:    #152847;
+  --electric:    #00d4ff;
+  --emerald:     #00e5a0;
+  --red:         #ff4d6d;
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+
+body {
+  background: var(--navy);
+  color: #fff;
+  font-family: 'DM Sans', sans-serif;
+}
+
+/* ── Logo mark ── */
+.logo-mark {
+  background: linear-gradient(135deg, rgba(0,212,255,0.2), rgba(0,229,160,0.15));
+  border: 1px solid rgba(0,212,255,0.3);
+}
+
+/* ── Login card ── */
+.login-card {
+  background: linear-gradient(135deg, rgba(255,255,255,0.05) 0%, rgba(0,212,255,0.04) 100%);
+  border: 1px solid rgba(255,255,255,0.08);
+  backdrop-filter: blur(16px);
+}
+
+/* ── Top bar ── */
+.admin-topbar {
+  background: rgba(5, 13, 26, 0.85);
+  backdrop-filter: blur(24px);
+  -webkit-backdrop-filter: blur(24px);
+  border-bottom: 1px solid rgba(255,255,255,0.06);
+}
+
+/* ── Stat cards ── */
+.stat-card {
+  background: linear-gradient(135deg, rgba(255,255,255,0.04), rgba(255,255,255,0.02));
+  border: 1px solid rgba(255,255,255,0.07);
+}
+
+/* ── Panel cards ── */
+.panel-card {
+  background: rgba(255,255,255,0.03);
+  border: 1px solid rgba(255,255,255,0.07);
+}
+
+/* ── Tabs ── */
+.tab-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.5rem 1.125rem;
+  border-radius: 999px;
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: rgba(255,255,255,0.45);
+  background: transparent;
+  border: 1px solid rgba(255,255,255,0.08);
+  cursor: pointer;
+  transition: all 0.25s;
+}
+.tab-btn:hover {
+  color: rgba(255,255,255,0.75);
+  border-color: rgba(255,255,255,0.15);
+}
+.tab-btn.active {
+  background: linear-gradient(135deg, rgba(0,212,255,0.15), rgba(0,229,160,0.1));
+  border-color: rgba(0,212,255,0.35);
+  color: #fff;
+}
+
+/* ── Form inputs ── */
+.form-input {
+  background: rgba(255,255,255,0.05);
+  border: 1px solid rgba(255,255,255,0.1);
+  border-radius: 12px;
+  padding: 0.7rem 1rem;
+  color: #fff;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 0.875rem;
+  transition: border-color 0.3s, box-shadow 0.3s;
+  outline: none;
+  -webkit-appearance: none;
+  width: 100%;
+}
+.form-input::placeholder { color: rgba(255,255,255,0.22); }
+.form-input:focus {
+  border-color: rgba(0,212,255,0.45);
+  box-shadow: 0 0 0 3px rgba(0,212,255,0.08);
+}
+.form-input option { background: #0a1628; color: #fff; }
+.form-input:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+.field-label {
+  display: block;
+  font-size: 0.72rem;
+  font-weight: 500;
+  color: rgba(255,255,255,0.45);
+  margin-bottom: 0.375rem;
+  letter-spacing: 0.01em;
+}
+
+/* ── Primary button ── */
+.btn-primary {
+  background: linear-gradient(135deg, var(--electric) 0%, var(--emerald) 100%);
+  color: var(--navy);
+  font-weight: 600;
+  transition: all 0.3s;
+  box-shadow: 0 0 24px rgba(0,212,255,0.2);
+  border: none;
+  cursor: pointer;
+}
+.btn-primary:hover:not(:disabled) {
+  transform: translateY(-1px);
+  box-shadow: 0 0 40px rgba(0,212,255,0.35);
+  filter: brightness(1.08);
+}
+.btn-primary:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+/* ── List rows ── */
+.list-row {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 1rem 1.5rem;
+  transition: background 0.2s;
+}
+.list-row:hover {
+  background: rgba(255,255,255,0.025);
+}
+
+.list-row-main {
+  flex: 1;
+  min-width: 0;
+}
+.list-row-title {
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: rgba(255,255,255,0.9);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.list-row-sub {
+  font-size: 0.75rem;
+  color: rgba(255,255,255,0.35);
+  margin-top: 0.1rem;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.list-row-actions {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  flex-shrink: 0;
+}
+
+/* Badge */
+.badge {
+  font-size: 0.65rem;
+  font-weight: 600;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  padding: 0.18rem 0.55rem;
+  border-radius: 999px;
+}
+.badge-active {
+  background: rgba(0,229,160,0.12);
+  color: var(--emerald);
+  border: 1px solid rgba(0,229,160,0.25);
+}
+.badge-inactive {
+  background: rgba(255,255,255,0.06);
+  color: rgba(255,255,255,0.35);
+  border: 1px solid rgba(255,255,255,0.1);
+}
+
+/* Action buttons */
+.btn-icon {
+  width: 32px;
+  height: 32px;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid rgba(255,255,255,0.08);
+  background: transparent;
+  color: rgba(255,255,255,0.4);
+  cursor: pointer;
+  transition: all 0.2s;
+}
+.btn-icon:hover { color: #fff; border-color: rgba(255,255,255,0.2); background: rgba(255,255,255,0.05); }
+.btn-icon.edit:hover  { color: var(--electric); border-color: rgba(0,212,255,0.3); }
+.btn-icon.delete:hover { color: var(--red); border-color: rgba(255,77,109,0.3); }
+
+/* ── Skeleton ── */
+.list-skeleton {
+  background: linear-gradient(90deg,
+    rgba(255,255,255,0.03) 0%,
+    rgba(255,255,255,0.06) 50%,
+    rgba(255,255,255,0.03) 100%
+  );
+  background-size: 200% 100%;
+  animation: shimmer 1.5s infinite;
+}
+@keyframes shimmer {
+  0%   { background-position: -200% 0; }
+  100% { background-position:  200% 0; }
+}
+
+/* ── Modal ── */
+.modal-backdrop {
+  background: rgba(5, 13, 26, 0.7);
+  backdrop-filter: blur(8px);
+}
+.modal-card {
+  background: #0a1628;
+  border: 1px solid rgba(255,255,255,0.09);
+}
+
+/* ── Toast ── */
+#toast.show { display: block !important; }
+
+/* ── Empty state ── */
+.empty-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 3rem 1.5rem;
+  color: rgba(255,255,255,0.25);
+  font-size: 0.875rem;
+}
+
+/* ── Scrollbar ── */
+::-webkit-scrollbar { width: 4px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.1); border-radius: 4px; }
+
+/* ── Animations ── */
+.fade-in {
+  animation: fade-up 0.4s cubic-bezier(0.19, 1, 0.22, 1) both;
+}
+@keyframes fade-up {
+  from { opacity: 0; transform: translateY(12px); }
+  to   { opacity: 1; transform: translateY(0); }
+}

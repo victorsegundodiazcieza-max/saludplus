@@ -1,0 +1,499 @@
+/* ── SaludPlus · style.css ── */
+
+:root {
+  --navy:       #050d1a;
+  --navy-800:   #0a1628;
+  --navy-700:   #0f2040;
+  --navy-600:   #152847;
+  --electric:   #00d4ff;
+  --electric-dim: #0097b8;
+  --emerald:    #00e5a0;
+  --emerald-dim: #00a870;
+  --white-10:   rgba(255,255,255,0.10);
+  --white-5:    rgba(255,255,255,0.05);
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+html { scroll-behavior: smooth; }
+
+body {
+  background: var(--navy);
+  color: #fff;
+  font-family: 'DM Sans', sans-serif;
+}
+
+/* ── Typography ── */
+.font-display { font-family: 'Playfair Display', serif; }
+
+.text-gradient {
+  background: linear-gradient(135deg, var(--electric) 0%, var(--emerald) 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* ── Navbar ── */
+#navbar {
+  background: transparent;
+}
+#navbar.scrolled {
+  background: rgba(5, 13, 26, 0.85);
+  backdrop-filter: blur(24px);
+  -webkit-backdrop-filter: blur(24px);
+  border-bottom: 1px solid rgba(255,255,255,0.06);
+}
+
+.logo-mark {
+  background: linear-gradient(135deg, rgba(0,212,255,0.2), rgba(0,229,160,0.15));
+  border: 1px solid rgba(0,212,255,0.3);
+}
+
+/* ── Buttons ── */
+.btn-primary {
+  background: linear-gradient(135deg, var(--electric) 0%, var(--emerald) 100%);
+  color: var(--navy);
+  font-weight: 600;
+  transition: all 0.3s ease;
+  box-shadow: 0 0 30px rgba(0,212,255,0.25);
+}
+.btn-primary:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 0 50px rgba(0,212,255,0.4);
+  filter: brightness(1.1);
+}
+
+/* ── Hero ── */
+#particle-canvas {
+  pointer-events: none;
+}
+
+.hero-gradient {
+  background: radial-gradient(ellipse 80% 60% at 50% 40%, rgba(0,212,255,0.06) 0%, transparent 70%),
+              radial-gradient(ellipse 60% 80% at 80% 80%, rgba(0,229,160,0.04) 0%, transparent 70%);
+}
+
+.hero-ring {
+  animation: hero-ring-pulse 4s ease-in-out infinite;
+  pointer-events: none;
+}
+@keyframes hero-ring-pulse {
+  0%, 100% { opacity: 0.5; transform: translateY(-50%) scale(1); }
+  50%       { opacity: 1;   transform: translateY(-50%) scale(1.02); }
+}
+
+.scroll-indicator {
+  animation: scroll-bounce 2.5s ease-in-out infinite;
+}
+@keyframes scroll-bounce {
+  0%, 100% { transform: translateX(-50%) translateY(0); opacity: 0.4; }
+  50%       { transform: translateX(-50%) translateY(8px); opacity: 0.8; }
+}
+
+/* ── Fade in (hero elements) ── */
+.fade-in {
+  opacity: 0;
+  animation: fade-up 0.9s cubic-bezier(0.19, 1, 0.22, 1) forwards;
+}
+@keyframes fade-up {
+  from { opacity: 0; transform: translateY(28px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* ── Scroll reveal ── */
+.reveal {
+  opacity: 0;
+  transform: translateY(32px);
+  transition: opacity 0.8s cubic-bezier(0.19, 1, 0.22, 1),
+              transform 0.8s cubic-bezier(0.19, 1, 0.22, 1);
+}
+.reveal.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* ── Section glow ── */
+.section-glow {
+  position: absolute;
+  width: 500px;
+  height: 500px;
+  background: radial-gradient(circle, rgba(0,212,255,0.07) 0%, transparent 70%);
+  pointer-events: none;
+  border-radius: 50%;
+}
+
+/* ── Service cards ── */
+.service-card {
+  background: linear-gradient(135deg, rgba(255,255,255,0.04) 0%, rgba(255,255,255,0.02) 100%);
+  border: 1px solid rgba(255,255,255,0.07);
+  transition: all 0.4s cubic-bezier(0.19, 1, 0.22, 1);
+  cursor: default;
+  position: relative;
+  overflow: hidden;
+}
+.service-card::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, var(--electric), transparent);
+  opacity: 0;
+  transition: opacity 0.4s;
+}
+.service-card:hover {
+  border-color: rgba(0,212,255,0.25);
+  background: linear-gradient(135deg, rgba(0,212,255,0.08) 0%, rgba(0,229,160,0.04) 100%);
+  transform: translateY(-6px);
+  box-shadow: 0 24px 48px rgba(0,0,0,0.3), 0 0 0 1px rgba(0,212,255,0.15);
+}
+.service-card:hover::before {
+  opacity: 1;
+}
+
+.service-skeleton {
+  background: linear-gradient(90deg,
+    rgba(255,255,255,0.03) 0%,
+    rgba(255,255,255,0.07) 50%,
+    rgba(255,255,255,0.03) 100%
+  );
+  background-size: 200% 100%;
+  animation: shimmer 1.5s infinite;
+}
+
+/* ── Doctor cards ── */
+.doctor-card {
+  background: linear-gradient(180deg, rgba(255,255,255,0.04) 0%, rgba(255,255,255,0.02) 100%);
+  border: 1px solid rgba(255,255,255,0.07);
+  transition: all 0.4s cubic-bezier(0.19, 1, 0.22, 1);
+  position: relative;
+  overflow: hidden;
+}
+.doctor-card::after {
+  content: '';
+  position: absolute;
+  bottom: 0; left: 0; right: 0;
+  height: 3px;
+  background: linear-gradient(90deg, var(--electric), var(--emerald));
+  transform: scaleX(0);
+  transition: transform 0.4s cubic-bezier(0.19, 1, 0.22, 1);
+  transform-origin: left;
+}
+.doctor-card:hover {
+  border-color: rgba(0,229,160,0.2);
+  transform: translateY(-8px);
+  box-shadow: 0 32px 64px rgba(0,0,0,0.4);
+}
+.doctor-card:hover::after {
+  transform: scaleX(1);
+}
+
+.doctor-avatar {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 2px solid rgba(0,212,255,0.3);
+}
+
+.doctor-avatar-placeholder {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, rgba(0,212,255,0.15), rgba(0,229,160,0.1));
+  border: 2px solid rgba(0,212,255,0.25);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: 'Playfair Display', serif;
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--electric);
+}
+
+.doctor-skeleton {
+  background: linear-gradient(90deg,
+    rgba(255,255,255,0.03) 0%,
+    rgba(255,255,255,0.07) 50%,
+    rgba(255,255,255,0.03) 100%
+  );
+  background-size: 200% 100%;
+  animation: shimmer 1.5s infinite;
+}
+
+@keyframes shimmer {
+  0%   { background-position: -200% 0; }
+  100% { background-position:  200% 0; }
+}
+
+/* ── FAQ ── */
+.faq-item {
+  background: rgba(255,255,255,0.03);
+  border: 1px solid rgba(255,255,255,0.07);
+  border-radius: 1rem;
+  overflow: hidden;
+  transition: border-color 0.3s;
+}
+.faq-item.open {
+  border-color: rgba(0,212,255,0.2);
+}
+.faq-question {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1.125rem 1.25rem;
+  text-align: left;
+  font-size: 0.9rem;
+  font-weight: 500;
+  color: rgba(255,255,255,0.85);
+  cursor: pointer;
+  transition: color 0.3s;
+  background: none;
+  border: none;
+  gap: 1rem;
+}
+.faq-question:hover { color: #fff; }
+.faq-icon {
+  flex-shrink: 0;
+  width: 20px;
+  height: 20px;
+  color: var(--electric);
+  transition: transform 0.3s ease;
+}
+.faq-item.open .faq-icon {
+  transform: rotate(45deg);
+}
+.faq-answer {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.4s cubic-bezier(0.19, 1, 0.22, 1);
+}
+.faq-item.open .faq-answer {
+  max-height: 300px;
+}
+.faq-answer-inner {
+  padding: 0 1.25rem 1.25rem;
+  font-size: 0.85rem;
+  color: rgba(255,255,255,0.5);
+  line-height: 1.7;
+}
+
+/* ── Contact ── */
+.contact-card {
+  background: linear-gradient(135deg, rgba(255,255,255,0.05) 0%, rgba(0,212,255,0.04) 100%);
+  border: 1px solid rgba(255,255,255,0.09);
+  backdrop-filter: blur(12px);
+}
+
+.contact-info-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 1rem;
+}
+.contact-icon-wrap {
+  width: 42px;
+  height: 42px;
+  border-radius: 12px;
+  background: rgba(0,212,255,0.1);
+  border: 1px solid rgba(0,212,255,0.2);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+/* ── Form inputs ── */
+.form-input {
+  background: rgba(255,255,255,0.05);
+  border: 1px solid rgba(255,255,255,0.1);
+  border-radius: 12px;
+  padding: 0.75rem 1rem;
+  color: #fff;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 0.875rem;
+  transition: border-color 0.3s, box-shadow 0.3s;
+  outline: none;
+  -webkit-appearance: none;
+}
+.form-input::placeholder { color: rgba(255,255,255,0.25); }
+.form-input:focus {
+  border-color: rgba(0,212,255,0.4);
+  box-shadow: 0 0 0 3px rgba(0,212,255,0.08);
+}
+.form-input option { background: #0a1628; color: #fff; }
+
+/* ── Chatbot ── */
+.chat-toggle-btn {
+  background: linear-gradient(135deg, #00a8cc 0%, #00c87a 100%);
+  box-shadow: 0 8px 32px rgba(0,212,255,0.4);
+  transition: all 0.3s;
+}
+.chat-toggle-btn:hover {
+  transform: scale(1.08);
+  box-shadow: 0 12px 40px rgba(0,212,255,0.5);
+}
+
+.chat-pulse {
+  animation: chat-ring 2.5s ease-out infinite;
+  box-shadow: 0 0 0 0 rgba(0,212,255,0.5);
+}
+@keyframes chat-ring {
+  0%   { box-shadow: 0 0 0 0 rgba(0,212,255,0.5); }
+  70%  { box-shadow: 0 0 0 14px rgba(0,212,255,0); }
+  100% { box-shadow: 0 0 0 0 rgba(0,212,255,0); }
+}
+
+.chat-panel {
+  background: #0a1628;
+  border: 1px solid rgba(255,255,255,0.08);
+  display: flex;
+  flex-direction: column;
+  animation: chat-slide-up 0.35s cubic-bezier(0.19, 1, 0.22, 1);
+}
+.chat-panel.hidden { display: none; }
+
+@keyframes chat-slide-up {
+  from { opacity: 0; transform: translateY(16px) scale(0.97); }
+  to   { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+.chat-header {
+  background: linear-gradient(135deg, rgba(0,212,255,0.12) 0%, rgba(0,229,160,0.08) 100%);
+  border-bottom: 1px solid rgba(255,255,255,0.07);
+}
+
+.chat-messages {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  scrollbar-width: thin;
+  scrollbar-color: rgba(255,255,255,0.1) transparent;
+}
+
+.chat-msg {
+  max-width: 85%;
+  font-size: 0.84rem;
+  line-height: 1.55;
+  animation: msg-pop 0.3s cubic-bezier(0.19, 1, 0.22, 1);
+}
+@keyframes msg-pop {
+  from { opacity: 0; transform: scale(0.92) translateY(8px); }
+  to   { opacity: 1; transform: scale(1) translateY(0); }
+}
+
+.chat-msg.user {
+  align-self: flex-end;
+  background: linear-gradient(135deg, var(--electric), var(--emerald));
+  color: var(--navy);
+  font-weight: 500;
+  border-radius: 18px 18px 4px 18px;
+  padding: 0.625rem 1rem;
+}
+
+.chat-msg.assistant {
+  align-self: flex-start;
+  background: rgba(255,255,255,0.06);
+  border: 1px solid rgba(255,255,255,0.08);
+  color: rgba(255,255,255,0.9);
+  border-radius: 18px 18px 18px 4px;
+  padding: 0.625rem 1rem;
+}
+
+.chat-footer {
+  border-top: 1px solid rgba(255,255,255,0.07);
+  background: rgba(5,13,26,0.6);
+}
+
+.chat-input {
+  background: rgba(255,255,255,0.06);
+  border: 1px solid rgba(255,255,255,0.1);
+  color: #fff;
+  font-family: 'DM Sans', sans-serif;
+  transition: border-color 0.3s;
+}
+.chat-input::placeholder { color: rgba(255,255,255,0.3); }
+.chat-input:focus {
+  outline: none;
+  border-color: rgba(0,212,255,0.4);
+}
+
+.chat-send-btn {
+  background: linear-gradient(135deg, var(--electric), var(--emerald));
+  color: var(--navy);
+  transition: all 0.3s;
+}
+.chat-send-btn:hover {
+  transform: scale(1.08);
+  filter: brightness(1.1);
+}
+
+/* Typing dots */
+.typing-dots span {
+  display: inline-block;
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: var(--electric);
+  animation: dot-bounce 1.2s infinite ease-in-out both;
+}
+.typing-dots span:nth-child(1) { animation-delay: 0s; }
+.typing-dots span:nth-child(2) { animation-delay: 0.2s; }
+.typing-dots span:nth-child(3) { animation-delay: 0.4s; }
+@keyframes dot-bounce {
+  0%, 80%, 100% { transform: scale(0.6); opacity: 0.4; }
+  40%           { transform: scale(1);   opacity: 1; }
+}
+
+/* ── Stat chip ── */
+.stat-chip {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.875rem 1.25rem;
+  background: rgba(255,255,255,0.04);
+  border: 1px solid rgba(255,255,255,0.08);
+  border-radius: 1rem;
+}
+
+/* ── Badge ── */
+.badge {
+  display: inline-block;
+  font-size: 0.68rem;
+  font-weight: 600;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  padding: 0.2rem 0.6rem;
+  border-radius: 999px;
+}
+.badge-electric {
+  background: rgba(0,212,255,0.12);
+  color: var(--electric);
+  border: 1px solid rgba(0,212,255,0.25);
+}
+.badge-emerald {
+  background: rgba(0,229,160,0.12);
+  color: var(--emerald);
+  border: 1px solid rgba(0,229,160,0.25);
+}
+
+/* ── Mobile tweaks ── */
+@media (max-width: 480px) {
+  #chat-bubble { right: 1rem; bottom: 1rem; }
+  .chat-panel  { width: calc(100vw - 2rem); right: 0; }
+}
+
+/* ── Chat disabled state ── */
+.chat-input:disabled,
+.chat-send-btn:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+/* ── Scrollbar ── */
+::-webkit-scrollbar { width: 4px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.1); border-radius: 4px; }
+
+/* ── Toast ── */
+#toast { transition: opacity 0.3s; }
+#toast.show { display: block !important; }

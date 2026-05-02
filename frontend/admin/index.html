@@ -1,0 +1,311 @@
+<!DOCTYPE html>
+<html lang="es" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>SaludPlus · Admin</title>
+
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet" />
+  <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js"></script>
+  <link rel="stylesheet" href="style.css" />
+
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            navy:     '#050d1a',
+            'navy-800': '#0a1628',
+            'navy-700': '#0f2040',
+            'navy-600': '#152847',
+            electric:  '#00d4ff',
+            emerald:   '#00e5a0',
+          },
+          fontFamily: {
+            display: ['"Playfair Display"', 'serif'],
+            body:    ['"DM Sans"', 'sans-serif'],
+          },
+        },
+      },
+    }
+  </script>
+</head>
+<body class="bg-navy text-white font-body antialiased min-h-screen">
+
+  <!-- ══════════════════════════════════════
+       LOGIN SCREEN
+  ══════════════════════════════════════ -->
+  <div id="screen-login" class="min-h-screen flex items-center justify-center px-4">
+    <!-- Decorative glow -->
+    <div class="absolute inset-0 overflow-hidden pointer-events-none">
+      <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] rounded-full"
+           style="background: radial-gradient(circle, rgba(0,212,255,0.07) 0%, transparent 70%)"></div>
+    </div>
+
+    <div class="login-card relative w-full max-w-sm rounded-3xl p-8">
+      <!-- Logo -->
+      <div class="flex items-center gap-3 mb-8">
+        <div class="logo-mark w-9 h-9 rounded-xl flex items-center justify-center">
+          <svg width="18" height="18" viewBox="0 0 20 20" fill="none">
+            <path d="M10 2v16M2 10h16" stroke="#00d4ff" stroke-width="2.5" stroke-linecap="round"/>
+          </svg>
+        </div>
+        <span class="font-display font-bold text-lg">Salud<span class="text-electric">Plus</span> <span class="text-white/30 font-body font-normal text-sm">Admin</span></span>
+      </div>
+
+      <h1 class="font-display text-2xl font-bold mb-1">Iniciar sesión</h1>
+      <p class="text-white/40 text-sm mb-7">Acceso exclusivo para administradores.</p>
+
+      <form id="login-form" novalidate class="space-y-4">
+        <div>
+          <label class="block text-xs text-white/50 mb-1.5 font-medium">Correo electrónico</label>
+          <input id="login-email" type="email" placeholder="admin@saludplus.pe"
+                 class="form-input w-full" autocomplete="email" required />
+        </div>
+        <div>
+          <label class="block text-xs text-white/50 mb-1.5 font-medium">Contraseña</label>
+          <div class="relative">
+            <input id="login-password" type="password" placeholder="••••••••"
+                   class="form-input w-full pr-10" autocomplete="current-password" required />
+            <button type="button" id="toggle-pw" tabindex="-1"
+                    class="absolute right-3 top-1/2 -translate-y-1/2 text-white/30 hover:text-white/70 transition-colors">
+              <i data-lucide="eye" class="w-4 h-4"></i>
+            </button>
+          </div>
+        </div>
+
+        <div id="login-error" class="hidden text-xs text-red-400 bg-red-400/10 border border-red-400/20 rounded-xl px-4 py-2.5 flex items-center gap-2">
+          <i data-lucide="alert-circle" class="w-3.5 h-3.5 flex-shrink-0"></i>
+          <span id="login-error-msg">Credenciales incorrectas.</span>
+        </div>
+
+        <button type="submit" id="login-btn"
+                class="btn-primary w-full py-3.5 rounded-2xl font-semibold text-sm flex items-center justify-center gap-2 mt-2">
+          <i data-lucide="log-in" class="w-4 h-4"></i>
+          <span>Ingresar</span>
+        </button>
+      </form>
+
+      <p class="text-white/20 text-xs text-center mt-6">
+        <a href="../index.html" class="hover:text-white/50 transition-colors">← Volver al sitio público</a>
+      </p>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════
+       ADMIN PANEL
+  ══════════════════════════════════════ -->
+  <div id="screen-panel" class="hidden min-h-screen flex flex-col">
+
+    <!-- Top bar -->
+    <header class="admin-topbar sticky top-0 z-50 px-6 lg:px-10 h-16 flex items-center justify-between">
+      <div class="flex items-center gap-3">
+        <div class="logo-mark w-8 h-8 rounded-lg flex items-center justify-center">
+          <svg width="16" height="16" viewBox="0 0 20 20" fill="none">
+            <path d="M10 2v16M2 10h16" stroke="#00d4ff" stroke-width="2.5" stroke-linecap="round"/>
+          </svg>
+        </div>
+        <span class="font-display font-bold text-base">Salud<span class="text-electric">Plus</span></span>
+        <span class="text-white/20 text-sm hidden sm:inline">/ Panel Admin</span>
+      </div>
+
+      <div class="flex items-center gap-3">
+        <span id="admin-email-label" class="text-white/40 text-xs hidden sm:inline"></span>
+        <button id="logout-btn"
+                class="flex items-center gap-1.5 text-xs text-white/50 hover:text-red-400 transition-colors border border-white/10 hover:border-red-400/30 rounded-full px-3 py-1.5">
+          <i data-lucide="log-out" class="w-3.5 h-3.5"></i>
+          Cerrar sesión
+        </button>
+      </div>
+    </header>
+
+    <!-- Main content -->
+    <main class="flex-1 max-w-5xl w-full mx-auto px-4 lg:px-8 py-8">
+
+      <!-- Stats row -->
+      <div id="stats-row" class="grid grid-cols-2 sm:grid-cols-3 gap-4 mb-8">
+        <div class="stat-card rounded-2xl p-5">
+          <p class="text-white/40 text-xs mb-1">Servicios activos</p>
+          <p id="stat-servicios" class="font-display text-3xl font-bold text-electric">—</p>
+        </div>
+        <div class="stat-card rounded-2xl p-5">
+          <p class="text-white/40 text-xs mb-1">Doctores activos</p>
+          <p id="stat-doctores" class="font-display text-3xl font-bold text-emerald">—</p>
+        </div>
+        <div class="stat-card rounded-2xl p-5 col-span-2 sm:col-span-1">
+          <p class="text-white/40 text-xs mb-1">FAQs activas</p>
+          <p id="stat-faqs" class="font-display text-3xl font-bold text-white">—</p>
+        </div>
+      </div>
+
+      <!-- Tab nav -->
+      <div class="flex gap-2 mb-6">
+        <button class="tab-btn active" data-tab="servicios">
+          <i data-lucide="stethoscope" class="w-4 h-4"></i>
+          Servicios
+        </button>
+        <button class="tab-btn" data-tab="faqs">
+          <i data-lucide="help-circle" class="w-4 h-4"></i>
+          FAQs
+        </button>
+      </div>
+
+      <!-- ── TAB: SERVICIOS ── -->
+      <div id="tab-servicios" class="tab-panel space-y-6">
+
+        <!-- Create form -->
+        <div class="panel-card rounded-2xl p-6">
+          <h2 class="font-display font-bold text-lg mb-5 flex items-center gap-2">
+            <i data-lucide="plus-circle" class="w-5 h-5 text-electric"></i>
+            Nuevo servicio
+          </h2>
+          <form id="form-servicio" novalidate class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            <div class="sm:col-span-2 grid grid-cols-1 sm:grid-cols-2 gap-4">
+              <div>
+                <label class="field-label">Nombre *</label>
+                <input id="sv-nombre" type="text" placeholder="Ej. Cardiología" class="form-input w-full" required />
+              </div>
+              <div>
+                <label class="field-label">Slug * <span class="text-white/30">(solo minúsculas y guiones)</span></label>
+                <input id="sv-slug" type="text" placeholder="cardiologia" class="form-input w-full" pattern="^[a-z0-9-]+$" required />
+              </div>
+            </div>
+            <div>
+              <label class="field-label">Ícono <span class="text-white/30">(nombre Lucide)</span></label>
+              <input id="sv-icono" type="text" placeholder="heart-pulse" class="form-input w-full" />
+            </div>
+            <div>
+              <label class="field-label">Color hex</label>
+              <input id="sv-color" type="text" placeholder="#00d4ff" class="form-input w-full" pattern="^#[0-9A-Fa-f]{6}$" />
+            </div>
+            <div class="sm:col-span-2">
+              <label class="field-label">Descripción corta</label>
+              <input id="sv-desc" type="text" placeholder="Una línea descriptiva" class="form-input w-full" />
+            </div>
+            <div class="sm:col-span-2">
+              <label class="field-label">Descripción larga</label>
+              <textarea id="sv-desc-larga" rows="3" placeholder="Texto completo de la especialidad..." class="form-input w-full resize-none"></textarea>
+            </div>
+            <div class="sm:col-span-2 flex items-center gap-3 pt-1">
+              <button type="submit" class="btn-primary px-6 py-2.5 rounded-xl text-sm font-semibold flex items-center gap-2">
+                <i data-lucide="save" class="w-4 h-4"></i>
+                <span id="sv-submit-label">Crear servicio</span>
+              </button>
+              <button type="button" id="sv-cancel-edit" class="hidden text-sm text-white/40 hover:text-white transition-colors">
+                Cancelar edición
+              </button>
+              <input type="hidden" id="sv-editing-id" value="" />
+            </div>
+          </form>
+        </div>
+
+        <!-- List -->
+        <div class="panel-card rounded-2xl overflow-hidden">
+          <div class="px-6 py-4 border-b border-white/5 flex items-center justify-between">
+            <h3 class="font-semibold text-sm">Servicios registrados</h3>
+            <button onclick="loadServicios()" class="text-white/30 hover:text-white transition-colors" title="Recargar">
+              <i data-lucide="refresh-cw" class="w-4 h-4"></i>
+            </button>
+          </div>
+          <div id="servicios-list" class="divide-y divide-white/5">
+            <div class="list-skeleton h-14 m-4 rounded-xl"></div>
+            <div class="list-skeleton h-14 m-4 rounded-xl"></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ── TAB: FAQS ── -->
+      <div id="tab-faqs" class="tab-panel hidden space-y-6">
+
+        <!-- Create form -->
+        <div class="panel-card rounded-2xl p-6">
+          <h2 class="font-display font-bold text-lg mb-5 flex items-center gap-2">
+            <i data-lucide="plus-circle" class="w-5 h-5 text-electric"></i>
+            Nueva FAQ
+          </h2>
+          <form id="form-faq" novalidate class="space-y-4">
+            <div>
+              <label class="field-label">Pregunta *</label>
+              <input id="fq-pregunta" type="text" placeholder="¿Aceptan seguros?" class="form-input w-full" required />
+            </div>
+            <div>
+              <label class="field-label">Respuesta *</label>
+              <textarea id="fq-respuesta" rows="4" placeholder="Respuesta completa..." class="form-input w-full resize-none" required></textarea>
+            </div>
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+              <div>
+                <label class="field-label">Categoría <span class="text-white/30">(opcional)</span></label>
+                <input id="fq-categoria" type="text" placeholder="citas, precios, seguros…" class="form-input w-full" />
+              </div>
+              <div>
+                <label class="field-label">Servicio relacionado <span class="text-white/30">(opcional)</span></label>
+                <select id="fq-servicio" class="form-input w-full">
+                  <option value="">— Sin especialidad —</option>
+                </select>
+              </div>
+            </div>
+            <div class="flex items-center gap-3 pt-1">
+              <button type="submit" class="btn-primary px-6 py-2.5 rounded-xl text-sm font-semibold flex items-center gap-2">
+                <i data-lucide="save" class="w-4 h-4"></i>
+                <span id="fq-submit-label">Crear FAQ</span>
+              </button>
+              <button type="button" id="fq-cancel-edit" class="hidden text-sm text-white/40 hover:text-white transition-colors">
+                Cancelar edición
+              </button>
+              <input type="hidden" id="fq-editing-id" value="" />
+            </div>
+          </form>
+        </div>
+
+        <!-- List -->
+        <div class="panel-card rounded-2xl overflow-hidden">
+          <div class="px-6 py-4 border-b border-white/5 flex items-center justify-between">
+            <h3 class="font-semibold text-sm">Preguntas registradas</h3>
+            <button onclick="loadFaqs()" class="text-white/30 hover:text-white transition-colors" title="Recargar">
+              <i data-lucide="refresh-cw" class="w-4 h-4"></i>
+            </button>
+          </div>
+          <div id="faqs-list" class="divide-y divide-white/5">
+            <div class="list-skeleton h-14 m-4 rounded-xl"></div>
+            <div class="list-skeleton h-14 m-4 rounded-xl"></div>
+          </div>
+        </div>
+      </div>
+
+    </main>
+  </div>
+
+  <!-- ── MODAL CONFIRM DELETE ── -->
+  <div id="modal-delete" class="fixed inset-0 z-[200] hidden items-center justify-center px-4">
+    <div class="modal-backdrop absolute inset-0" id="modal-backdrop"></div>
+    <div class="modal-card relative rounded-2xl p-7 w-full max-w-sm">
+      <div class="w-12 h-12 rounded-2xl bg-red-500/10 border border-red-500/20 flex items-center justify-center mb-4">
+        <i data-lucide="trash-2" class="w-5 h-5 text-red-400"></i>
+      </div>
+      <h3 class="font-display font-bold text-lg mb-2">¿Eliminar registro?</h3>
+      <p id="modal-delete-msg" class="text-white/50 text-sm mb-6">Esta acción no se puede deshacer.</p>
+      <div class="flex gap-3">
+        <button id="modal-cancel" class="flex-1 py-2.5 rounded-xl border border-white/10 text-sm text-white/60 hover:text-white hover:border-white/30 transition-all">
+          Cancelar
+        </button>
+        <button id="modal-confirm" class="flex-1 py-2.5 rounded-xl bg-red-500/80 hover:bg-red-500 text-white text-sm font-semibold transition-colors">
+          Eliminar
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Toast -->
+  <div id="toast" class="fixed bottom-6 right-6 z-[300] hidden">
+    <div class="bg-navy-700 border border-white/10 rounded-2xl px-5 py-3 text-sm text-white shadow-xl flex items-center gap-3">
+      <i id="toast-icon" data-lucide="check-circle" class="w-4 h-4 text-emerald flex-shrink-0"></i>
+      <span id="toast-msg">OK</span>
+    </div>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>
