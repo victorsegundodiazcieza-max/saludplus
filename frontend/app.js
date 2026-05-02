@@ -3,7 +3,7 @@
 'use strict';
 
 // ── CONFIG ─────────────────────────────────────────────────────────────────────
-const API_URL = 'http://localhost:8000'; // ← cambiar a URL de Render en producción
+const API_URL = 'https://saludplus-api.onrender.com';
 
 // ── STATE ──────────────────────────────────────────────────────────────────────
 let chatHistorial = [];
